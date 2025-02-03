@@ -1,0 +1,36 @@
+<div class="popup-overlay" id="popup">
+    <div class="popup">
+        <h1>Create Product</h1>
+        <form action="/createNewProduct" method="post">
+            <label>Product Code</label>
+            <input type="text" name="productCode" required>
+            <label>Product Name</label>
+            <input type="text" name="productName" required>
+            <label>Scale</label>
+            <input type="text" name="productScale" required>
+            <label>Vendor</label>
+            <input type="text" name="productVendor" required>
+            <label>Description</label>
+            <input type="text" name="productDescription" required>
+            <div>
+                <span>
+                    <label>Price</label>
+                    <input type="number" name="buyPrice" required>
+                </span>
+                <span>
+                    <label>Qantity</label>
+                    <input type="number" name="quantityInStock" required>
+                </span>
+            </div>
+            <label>MSRP</label>
+            <input type="number" name="msrp" required>
+            <label>Productline</label>
+            <select name="productLine" required>
+                <option th:each="pl : ${productLines}" th:value="${pl.productLine}" th:text="${pl.productLine}"></option>
+            </select>
+            <button type="submit">Add Product</button>
+        </form>
+
+        <span class="close-popupBtn" id="close-popupBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></span>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amason</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<!-- Navbar-->
+<th:block th:insert="~{fragments/navbar}"></th:block>
+
+<section class="product-section">
+
+    <div class="product-slider" id="slider">
+        <div class="slides">
+            <!-- Duplicate last image -->
+            <div class="slide-item">
+                <img th:src="${slidesUrl.getLast()}">
+            </div>
+            <!-- Real image -->
+            <div class="slide-item" th:each="url : ${slidesUrl}">
+                <img  th:src="${url}">
+            </div>
+            <!-- Duplicate first image -->
+            <div class="slide-item">
+                <img th:src="${slidesUrl.getFirst()}">
+            </div>
+        </div>
+        <!-- Navigation buttons -->
+        <button class="prev">❮</button>
+        <button class="next">❯</button>
+    </div>
+
+    <div class="product-list">
+
+        <div class="product-item" th:each=" p : ${products}">
+            <h2 class="product-name" th:text="${p.productName}"></h2>
+            <button class="product-addToCartBtn" onclick="updateCart(this.value)" th:value="${p.productCode}">
+                <img th:src="${'/model-images/'+ p.productLine + '/' + p.productCode + '.jpg'}" th:if="${!p.productCode.startsWith('125')}">
+                <img src="https://www.raanthai.co.uk/cdn/shop/files/dri183lg.jpg?v=1721493542&width=299" th:if="${p.productCode.startsWith('125')}">
+                <span>Add to cart now <span class="newest-product" th:if="${p.productCode.startsWith('125')}">(Newest Product!)</span></span>
+            </button>
+
+            <span class="editBtn-wrapper" th:if="${p.productCode.startsWith('125')}">
+                <a th:href="@{/edit(productCode=${p.productCode})}" class="updateBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></a>
+                <a th:href="@{/delete(productCode=${p.productCode})}" class="deleteBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></a>
+            </span>
+        </div>
+
+    </div>
+</section>
+
+<!-- Product Pop-up -->
+<th:block th:insert="~{fragments/create_product_popup}" th:if="${page == 'addProduct'}"></th:block>
+<th:block th:insert="~{fragments/update_product-popup}" th:if="${page == 'updateProduct'}"></th:block>
+<!-- Login Pop-up -->
+<th:block th:insert="~{fragments/login_popup}" th:if="${page == 'login'}"></th:block>
+<!--Snackbar Message -->
+<th:block th:insert="~{fragments/snackbarMsg}" th:if="${statusMsg != null}"></th:block>
+
+<script src="/js/main_script.js"></script>
+</body>
+</html>

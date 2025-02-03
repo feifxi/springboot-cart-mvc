@@ -1,0 +1,36 @@
+<div class="popup-overlay" id="popup">
+    <div class="popup">
+        <h1>Update Product</h1>
+        <form th:action="@{/updateProduct}" method="post">
+            <label>Product Code</label>
+            <input type="text" name="productCode" required th:value="${editProduct.productCode}" readonly>
+            <label>Product Name</label>
+            <input type="text" name="productName" required th:value="${editProduct.productName}">
+            <label>Scale</label>
+            <input type="text" name="productScale" required th:value="${editProduct.productScale}">
+            <label>Vendor</label>
+            <input type="text" name="productVendor" required th:value="${editProduct.productVendor}">
+            <label>Description</label>
+            <input type="text" name="productDescription" required th:value="${editProduct.productDescription}">
+            <div>
+                <span>
+                    <label>Price</label>
+                    <input type="number" name="buyPrice" required th:value="${editProduct.buyPrice}">
+                </span>
+                <span>
+                    <label>Qantity</label>
+                    <input type="number" name="quantityInStock" required th:value="${editProduct.quantityInStock}">
+                </span>
+            </div>
+            <label>MSRP</label>
+            <input type="number" name="msrp" required th:value="${editProduct.msrp}">
+            <label>Productline</label>
+            <select name="productLine" required>
+                <option th:each="pl : ${productLines}" th:value="${pl.productLine}" th:text="${pl.productLine}" th:selected="${editProduct.productLine.equals(pl.productLine)}"></option>
+            </select>
+            <button type="submit">Update Product</button>
+        </form>
+
+        <span class="close-popupBtn" id="close-popupBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></span>
+    </div>
+</div>

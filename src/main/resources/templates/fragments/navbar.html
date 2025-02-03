@@ -1,0 +1,30 @@
+<nav>
+    <div class="nav-left">
+        <a href="/">
+            <img src="/img/amason_logo.png" alt="">
+        </a>
+
+        <form action="/search" method="get">
+            <input type="text" placeholder="Search Product" name="productName" autocomplete="off">
+            <button>Search</button>
+        </form>
+    </div>
+    <div class="nav-right">
+        <div class="authen-link">
+            <a href="/login" class="create-product-link" th:if="${#ctx.session.user == null}">Login</a>
+            <div class="user-profile" th:if="${#ctx.session.user != null}">
+                <img src="https://media1.tenor.com/m/6dQAtXpftXYAAAAd/frieren-shrek.gif" alt="User Avatar" class="user-avatar">
+                <span class="user-name" th:text="${#ctx.session.user}"></span>
+            </div>
+        </div>
+
+        <a href="/addProduct" class="create-product-link">Create Product</a>
+
+        <div class="cart " th:class="${'cart ' + ((#ctx.session.cart != null) && (#ctx.session.cart.quantity > 0) ? 'active' : '')}">
+            <a href="/cart">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
+                <span id="cart-number" th:class="${( (#ctx.session.cart != null) && (#ctx.session.cart.quantity > 0) ) ? 'cart-item-number' : '' }" th:text="${( (#ctx.session.cart != null) && (#ctx.session.cart.quantity > 0) ) ? #ctx.session.cart.quantity : '' }"></span>
+            </a>
+        </div>
+    </div>
+</nav>

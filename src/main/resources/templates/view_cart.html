@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns=http://www.w3.org/1999/xhtml xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<!-- Navbar-->
+<th:block th:insert="~{fragments/navbar}"></th:block>
+
+<!-- CART SECTION -->
+<section class="cart-section">
+    <div class="cart-header">
+        <h1>Your Shopping cart</h1>
+        <div class="title">
+            <div>Product</div>
+            <div>
+                <span>Price</span>
+                <span>Quantity</span>
+                <span>Total</span>
+            </div>
+        </div>
+    </div>
+    <div class="cart-item-list">
+
+        <h2 id="cart-noItem" th:class="${#ctx.session.cart.quantity > 0 ? 'hide' : '' }">No item in the cart...</h2>
+
+        <div class="cart-item" th:each="ci : ${#ctx.session.cart.allItem}" th:id="${ci.product.productCode}">
+            <div>
+                <img th:src="${'/model-images/'+ ci.product.productLine + '/' + ci.product.productCode + '.jpg'}" th:if="${!ci.product.productCode.startsWith('125')}">
+                <img src="https://www.raanthai.co.uk/cdn/shop/files/dri183lg.jpg?v=1721493542&width=299" th:if="${ci.product.productCode.startsWith('125')}">
+                <span th:text="${ci.product.productName}"></span>
+            </div>
+            <div>
+                <span class="item-price" th:text="${'$' + ci.unitPrice}"></span>
+                <span class="item-quantity">
+                    <button id="decrease-cart" th:value="${ci.product.productCode}" onclick="updateCart(this.value, 'remove')">-</button>
+                    <span th:text="${ci.quantity}" th:id="${'quantity-' + ci.product.productCode}"></span>
+                    <button id="increase-cart" th:value="${ci.product.productCode}" onclick="updateCart(this.value, 'add')">+</button>
+                </span>
+                <span class="item-total" th:id="${'cartItem-total-'+ ci.product.productCode}" th:text="${'$' + ci.totalString}"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cart-summary" id="cart-summary" th:if="${#ctx.session.cart.quantity > 0}">
+        <h2 id="cart-total-summary" th:text="${'Total : $' + #ctx.session.cart.cartTotalString}"></h2>
+        <button class="checkoutBtn">Check Out</button>
+    </div>
+</section>
+
+<script src="/js/cart_script.js"></script>
+
+</body>
+</html>
